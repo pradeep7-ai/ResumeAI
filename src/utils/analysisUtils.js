@@ -1,0 +1,102 @@
+/**
+ * Utility functions for resume analysis operations
+ */
+
+/**
+ * Highlights missing keywords in the resume text
+ * @param {string} text - The resume text to highlight
+ * @param {string[]} keywords - Array of keywords to highlight
+ * @returns {string} - HTML string with highlighted keywords
+ */
+export const highlightKeywords = (text, keywords) => {
+  if (!keywords || keywords.length === 0 || !text) return text;
+
+  let highlighted = text;
+  keywords.forEach((keyword) => {
+    if (keyword && keyword.length > 1) {
+      const escapedKeyword = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      const regex = new RegExp(`\\b(${escapedKeyword})\\b`, "gi");
+      highlighted = highlighted.replace(
+        regex,
+        '<mark class="bg-yellow-300 text-yellow-900 px-1 py-0.5 rounded font-medium">$1</mark>'
+      );
+    }
+  });
+  return highlighted;
+};
+
+/**
+ * Gets the appropriate color classes for a score
+ * @param {number} score - The score (0-100)
+ * @returns {string} - Tailwind CSS classes for the score color
+ */
+export const getScoreColor = (score) => {
+  if (score >= 90) return "text-green-600 bg-green-100";
+  if (score >= 80) return "text-blue-600 bg-blue-100";
+  if (score >= 70) return "text-yellow-600 bg-yellow-100";
+  return "text-red-600 bg-red-100";
+};
+
+/**
+ * Gets the label for a score
+ * @param {number} score - The score (0-100)
+ * @returns {string} - Human-readable label for the score
+ */
+export const getScoreLabel = (score) => {
+  if (score >= 90) return "Excellent";
+  if (score >= 80) return "Good";
+  if (score >= 70) return "Fair";
+  return "Needs Improvement";
+};
+
+/**
+ * Copies text to clipboard
+ * @param {string} text - Text to copy
+ */
+export const copyToClipboard = (text) => {
+  navigator.clipboard.writeText(text);
+  // You could add a toast notification here
+};
+
+/**
+ * Downloads analysis report as a text file
+ * @param {Object} analysis - The analysis object
+ */
+export const downloadReport = (analysis) => {
+  if (!analysis) return;
+
+  const report = `RESUME ANALYSIS REPORT
+Generated: ${new Date(analysis.timestamp).toLocaleString()}
+File: ${analysis.fileName}
+
+SCORES:
+ATS Score: ${analysis.atsScore}%
+Overall Match: ${analysis.overallScore}%
+
+STRENGTHS:
+${analysis.strengths.map((s) => `• ${s}`).join("\n")}
+
+AREAS FOR IMPROVEMENT:
+${analysis.weaknesses.map((w) => `• ${w}`).join("\n")}
+
+MISSING KEYWORDS:
+${analysis.missingKeywords.join(", ")}
+
+RECOMMENDATIONS:
+${analysis.recommendations.map((r) => `• ${r}`).join("\n")}
+
+SUGGESTED ADDITIONS:
+${analysis.suggestedAdditions.map((s) => `• ${s}`).join("\n")}
+`;
+
+  const blob = new Blob([report], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = `resume_analysis_${analysis.fileName.replace(
+    /\s+/g,
+    "_"
+  )}.txt`;
+  link.click();
+  URL.revokeObjectURL(url);
+};
