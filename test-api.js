@@ -1,5 +1,5 @@
 // Test script to verify Gemini API key
-const GEMINI_API_KEY = "AIzaSyBN6zknZt0C7Fxw3edp6_1DvT-HWANfb2w";
+const GEMINI_API_KEY = "";
 const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent";
 
