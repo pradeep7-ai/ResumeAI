@@ -8,7 +8,9 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "setup": "node setup-env.js"
+    "setup": "node setup-env.js",
+    "test": "echo \"No tests specified\" && exit 0",
+    "format:check": "echo \"No formatter configured\" && exit 0"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
