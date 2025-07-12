@@ -14,6 +14,8 @@ import HistorySection from "./components/HistorySection";
 import ResultsSection from "./components/ResultsSection";
 import Footer from "./components/Footer";
 
+import { extractTextFromPDF, isPDFFile } from "./utils/pdfUtils";
+
 /**
  * Main App Component
  *

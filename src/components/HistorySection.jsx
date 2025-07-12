@@ -27,7 +27,7 @@ const HistorySection = ({ savedAnalyses, setAnalysis, setActiveSection }) => {
           </p>
           <button
             onClick={() => setActiveSection("input")}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold transition-colors cursor-pointer"
           >
             Get Started
           </button>
@@ -77,7 +77,7 @@ const HistorySection = ({ savedAnalyses, setAnalysis, setActiveSection }) => {
                       setAnalysis(savedAnalysis);
                       setActiveSection("results");
                     }}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
                   >
                     View Details
                   </button>

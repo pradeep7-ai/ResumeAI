@@ -4,10 +4,7 @@ import {
   Target,
   RefreshCw,
   Copy,
-  Eye,
-  EyeOff,
   AlertCircle,
-  CheckCircle,
 } from "lucide-react";
 
 /**
@@ -23,15 +20,11 @@ const InputSection = ({
   setCurrentFileName,
   fileInputRef,
   handleFileUpload,
-  analysis,
-  showKeywordPreview,
-  setShowKeywordPreview,
-  highlightKeywords,
-  copyToClipboard,
   error,
   isLoading,
   analyzeResume,
   resetForm,
+  copyToClipboard,
 }) => {
   return (
     <div className="space-y-8">
@@ -58,10 +51,15 @@ const InputSection = ({
               Pro Tips for Best Results
             </h3>
             <div className="grid md:grid-cols-2 gap-4 text-sm opacity-90">
-              <div>• Copy text directly from your PDF resume</div>
-              <div>• Include complete job posting description</div>
-              <div>• Use specific job titles and company names</div>
-              <div>• Include skills, requirements, and qualifications</div>
+              <div>• Upload your resume as a PDF for best text extraction</div>
+              <div>• Paste the full job description for accurate matching</div>
+              <div>
+                • Use clear section headings (e.g., Experience, Skills,
+                Education)
+              </div>
+              <div>
+                • Use standard fonts and avoid images for important info
+              </div>
             </div>
           </div>
         </div>
@@ -82,7 +80,7 @@ const InputSection = ({
               <div className="flex items-center space-x-2">
                 <button
                   onClick={() => fileInputRef.current?.click()}
-                  className="bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1"
+                  className="bg-white/20 hover:bg-white/30 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors flex items-center space-x-1 cursor-pointer"
                 >
                   <Upload className="w-4 h-4" />
                   <span>Upload</span>
@@ -90,7 +88,7 @@ const InputSection = ({
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".txt"
+                  accept=".pdf,.txt"
                   onChange={handleFileUpload}
                   className="hidden"
                 />
@@ -107,7 +105,7 @@ const InputSection = ({
             <textarea
               value={resume}
               onChange={(e) => setResume(e.target.value)}
-              placeholder="Paste your resume content here... You can also upload a .txt file using the Upload button above."
+              placeholder="Paste your resume content here... You can also upload a PDF or .txt file using the Upload button above."
               className="w-full h-80 p-4 border-2 border-gray-200 rounded-xl resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 bg-gray-50 transition-all placeholder-gray-400"
             />
 
@@ -116,81 +114,20 @@ const InputSection = ({
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => copyToClipboard(resume)}
-                  className="flex items-center space-x-1 hover:text-blue-600 transition-colors"
+                  className="flex items-center space-x-1 hover:text-blue-600 transition-colors cursor-pointer"
                 >
                   <Copy className="w-4 h-4" />
                   <span>Copy</span>
                 </button>
                 <button
                   onClick={() => setResume("")}
-                  className="flex items-center space-x-1 hover:text-red-600 transition-colors"
+                  className="flex items-center space-x-1 hover:text-red-600 transition-colors cursor-pointer"
                 >
                   <RefreshCw className="w-4 h-4" />
                   <span>Clear</span>
                 </button>
               </div>
             </div>
-
-            {/* Keyword Preview */}
-            {analysis && analysis.missingKeywords && resume && (
-              <div className="mt-6 border-t border-gray-200 pt-6">
-                <div className="flex items-center justify-between mb-3">
-                  <h3 className="font-semibold text-gray-800 flex items-center space-x-2">
-                    <Target className="w-4 h-4" />
-                    <span>Keyword Analysis</span>
-                  </h3>
-                  <button
-                    onClick={() => setShowKeywordPreview(!showKeywordPreview)}
-                    className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 transition-colors"
-                  >
-                    {showKeywordPreview ? (
-                      <EyeOff className="w-4 h-4" />
-                    ) : (
-                      <Eye className="w-4 h-4" />
-                    )}
-                    <span>{showKeywordPreview ? "Hide" : "Show"} Preview</span>
-                  </button>
-                </div>
-
-                {showKeywordPreview && (
-                  <div className="bg-yellow-50 border-2 border-yellow-200 rounded-xl p-4 max-h-60 overflow-y-auto">
-                    <div
-                      className="prose prose-sm max-w-none text-gray-800 leading-relaxed"
-                      dangerouslySetInnerHTML={{
-                        __html: highlightKeywords(
-                          resume,
-                          analysis.missingKeywords
-                        ),
-                      }}
-                    />
-                    <div className="mt-3 pt-3 border-t border-yellow-300">
-                      <p className="text-xs text-yellow-700 flex items-center space-x-1">
-                        <AlertCircle className="w-3 h-3" />
-                        <span>
-                          Highlighted words are missing keywords from the job
-                          description
-                        </span>
-                      </p>
-                    </div>
-                  </div>
-                )}
-
-                {analysis.missingKeywords.length === 0 && (
-                  <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
-                    <div className="flex items-center space-x-2 text-green-700">
-                      <CheckCircle className="w-5 h-5" />
-                      <span className="font-medium">
-                        Perfect keyword match!
-                      </span>
-                    </div>
-                    <p className="text-green-600 text-sm mt-1">
-                      Your resume contains all important keywords from the job
-                      description.
-                    </p>
-                  </div>
-                )}
-              </div>
-            )}
           </div>
         </div>
 
@@ -218,14 +155,14 @@ const InputSection = ({
               <div className="flex items-center space-x-4">
                 <button
                   onClick={() => copyToClipboard(jobDescription)}
-                  className="flex items-center space-x-1 hover:text-indigo-600 transition-colors"
+                  className="flex items-center space-x-1 hover:text-indigo-600 transition-colors cursor-pointer"
                 >
                   <Copy className="w-4 h-4" />
                   <span>Copy</span>
                 </button>
                 <button
                   onClick={() => setJobDescription("")}
-                  className="flex items-center space-x-1 hover:text-red-600 transition-colors"
+                  className="flex items-center space-x-1 hover:text-red-600 transition-colors cursor-pointer"
                 >
                   <RefreshCw className="w-4 h-4" />
                   <span>Clear</span>
@@ -241,7 +178,7 @@ const InputSection = ({
         <button
           onClick={analyzeResume}
           disabled={isLoading || !resume.trim() || !jobDescription.trim()}
-          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:hover:scale-100"
+          className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105 disabled:transform-none disabled:hover:scale-100 cursor-pointer text-lg"
         >
           {isLoading ? (
             <>
@@ -270,7 +207,8 @@ const InputSection = ({
 
         <button
           onClick={resetForm}
-          className="bg-gray-500 hover:bg-gray-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl"
+          className="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl transform hover:scale-105 cursor-pointer text-lg"
+          type="button"
         >
           <RefreshCw className="w-5 h-5" />
           <span>Reset All</span>

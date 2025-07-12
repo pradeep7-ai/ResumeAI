@@ -20,9 +20,11 @@ const Header = ({
               <FileText className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">ResumeAI Pro</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                ResumeEnhancer
+              </h1>
               <p className="text-sm text-gray-600">
-                AI-Powered Resume Optimization
+                AI-Powered Resume Enhancement
               </p>
             </div>
           </div>
@@ -32,7 +34,7 @@ const Header = ({
             <div className="flex bg-gray-100 rounded-lg p-1">
               <button
                 onClick={() => setActiveSection("input")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
                   activeSection === "input"
                     ? "bg-white text-blue-600 shadow-sm"
                     : "text-gray-600 hover:text-gray-900"
@@ -42,7 +44,7 @@ const Header = ({
               </button>
               <button
                 onClick={() => setActiveSection("history")}
-                className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                className={`px-4 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
                   activeSection === "history"
                     ? "bg-white text-blue-600 shadow-sm"
                     : "text-gray-600 hover:text-gray-900"
@@ -53,7 +55,7 @@ const Header = ({
               {analysis && (
                 <button
                   onClick={() => setActiveSection("results")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all cursor-pointer ${
                     activeSection === "results"
                       ? "bg-white text-blue-600 shadow-sm"
                       : "text-gray-600 hover:text-gray-900"

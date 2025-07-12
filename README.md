@@ -1,6 +1,6 @@
-# ResumeAI Pro
+# ResumeEnhancer
 
-An AI-powered resume analysis and optimization tool built with React, Tailwind CSS, and Google's Gemini API.
+An AI-powered resume analysis and enhancement tool built with React, Tailwind CSS, and Google's Gemini API.
 
 ## 🚀 Features
 
@@ -9,7 +9,7 @@ An AI-powered resume analysis and optimization tool built with React, Tailwind C
 - **Keyword Matching**: Identifies missing keywords from job descriptions
 - **Smart Recommendations**: Provides actionable improvement suggestions
 - **History Management**: Saves and manages previous analyses
-- **File Upload**: Support for .txt file uploads
+- **File Upload**: Support for .txt and .pdf file uploads
 - **Responsive Design**: Beautiful, modern UI that works on all devices
 
 ## 📁 Project Structure
@@ -111,7 +111,8 @@ Centralizes all application logic including:
 - Hover effects and transitions
 - Loading states with spinners
 - Error handling with user-friendly messages
-- Copy-to-clipboard functionality
+- Copy-to-clipboard functionality with toast notifications
+- Modern gradient buttons with consistent styling
 
 ### **Accessibility**
 
@@ -146,6 +147,13 @@ Centralizes all application logic including:
 - Consistent code formatting
 - Modular component architecture
 - Separation of concerns
+
+### **PDF Processing**
+
+- PDF.js integration for .pdf file parsing
+- Text extraction from PDF documents
+- Support for multi-page PDF files
+- Proper worker configuration for Vite compatibility
 
 ## 🚀 Getting Started
 
@@ -206,7 +214,7 @@ This project uses environment variables to keep sensitive information secure:
 
 ## 📝 Usage Instructions
 
-1. **Input Resume**: Paste your resume text or upload a .txt file
+1. **Input Resume**: Paste your resume text or upload a .txt or .pdf file
 2. **Add Job Description**: Paste the complete job posting description
 3. **Analyze**: Click "Analyze Resume" to get AI-powered insights
 4. **Review Results**: Check scores, missing keywords, and recommendations

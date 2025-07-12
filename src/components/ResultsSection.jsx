@@ -11,6 +11,8 @@ import {
   RefreshCw,
   Copy,
 } from "lucide-react";
+import { formatAnalysisForCopy } from "../utils/analysisUtils";
+import { useState } from "react";
 
 /**
  * Results Section Component
@@ -24,8 +26,28 @@ const ResultsSection = ({
   getScoreColor,
   getScoreLabel,
 }) => {
+  const [showToast, setShowToast] = useState(false);
+
+  const handleCopy = () => {
+    copyToClipboard(formatAnalysisForCopy(analysis));
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 2000);
+  };
+
   return (
     <div className="space-y-8">
+      {/* Toast Notification */}
+      {showToast && (
+        <div className="fixed top-4 right-4 z-50 animate-in slide-in-from-right-2 duration-300">
+          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2">
+            <CheckCircle className="w-5 h-5" />
+            <span className="font-medium">
+              Analysis data copied to clipboard!
+            </span>
+          </div>
+        </div>
+      )}
+
       {/* Results Header */}
       <div className="text-center">
         <div className="flex items-center justify-center space-x-3 mb-4">
@@ -250,7 +272,7 @@ const ResultsSection = ({
       <div className="flex flex-wrap justify-center gap-4">
         <button
           onClick={downloadReport}
-          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl"
+          className="bg-green-600 hover:bg-green-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl cursor-pointer"
         >
           <Download className="w-5 h-5" />
           <span>Download Full Report</span>
@@ -258,15 +280,15 @@ const ResultsSection = ({
 
         <button
           onClick={() => setActiveSection("input")}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl cursor-pointer"
         >
           <RefreshCw className="w-5 h-5" />
           <span>Analyze Another Resume</span>
         </button>
 
         <button
-          onClick={() => copyToClipboard(JSON.stringify(analysis, null, 2))}
-          className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl"
+          onClick={handleCopy}
+          className="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-200 flex items-center space-x-3 shadow-lg hover:shadow-xl cursor-pointer"
         >
           <Copy className="w-5 h-5" />
           <span>Copy Analysis Data</span>

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { analyzeResumeWithGemini } from "../services/geminiService";
 import { loadSavedAnalyses, saveAnalysis } from "../utils/storageUtils";
+import { extractTextFromPDF, isPDFFile } from "../utils/pdfUtils";
 
 /**
  * Custom hook for managing resume analysis functionality
@@ -78,19 +79,37 @@ export const useResumeAnalysis = () => {
   };
 
   /**
-   * Handles file upload for resume text
+   * Handles file upload for resume text (PDF or TXT)
    */
-  const handleFileUpload = (event) => {
+  const handleFileUpload = async (event) => {
     const file = event.target.files[0];
-    if (file && file.type === "text/plain") {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setResume(e.target.result);
+    if (!file) return;
+
+    try {
+      setError("");
+
+      if (isPDFFile(file)) {
+        // Handle PDF file
+        const extractedText = await extractTextFromPDF(file);
+        setResume(extractedText);
         setCurrentFileName(file.name.replace(/\.[^/.]+$/, ""));
-      };
-      reader.readAsText(file);
-    } else {
-      setError("Please upload a text file (.txt)");
+      } else if (file.type === "text/plain") {
+        // Handle text file
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          setResume(e.target.result);
+          setCurrentFileName(file.name.replace(/\.[^/.]+$/, ""));
+        };
+        reader.readAsText(file);
+      } else {
+        setError("Please upload a PDF file (.pdf) or text file (.txt)");
+      }
+    } catch (error) {
+      console.error("File upload error:", error);
+      setError(
+        error.message ||
+          "Failed to process the uploaded file. Please try again."
+      );
     }
   };
 
