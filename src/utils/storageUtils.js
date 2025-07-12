@@ -121,7 +121,7 @@ export const importAnalyses = (file) => {
         } else {
           reject(new Error("Invalid file format"));
         }
-      } catch (error) {
+      } catch {
         reject(new Error("Error parsing JSON file"));
       }
     };

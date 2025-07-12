@@ -17,7 +17,6 @@ const InputSection = ({
   jobDescription,
   setJobDescription,
   currentFileName,
-  setCurrentFileName,
   fileInputRef,
   handleFileUpload,
   error,

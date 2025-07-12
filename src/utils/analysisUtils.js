@@ -67,7 +67,6 @@ export const formatAnalysisForCopy = (analysis) => {
   if (!analysis) return "";
 
   const formatScore = (score) => {
-    const color = getScoreColor(score);
     const label = getScoreLabel(score);
     return `${score}% (${label})`;
   };

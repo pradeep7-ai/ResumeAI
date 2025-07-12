@@ -14,7 +14,7 @@ import HistorySection from "./components/HistorySection";
 import ResultsSection from "./components/ResultsSection";
 import Footer from "./components/Footer";
 
-import { extractTextFromPDF, isPDFFile } from "./utils/pdfUtils";
+// PDF utilities are imported in InputSection component
 
 /**
  * Main App Component
@@ -75,7 +75,6 @@ function App() {
             jobDescription={jobDescription}
             setJobDescription={setJobDescription}
             currentFileName={currentFileName}
-            setCurrentFileName={setCurrentFileName}
             fileInputRef={fileInputRef}
             handleFileUpload={handleFileUpload}
             analysis={analysis}
