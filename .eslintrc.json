@@ -26,10 +26,12 @@
     {
       "files": ["setup-env.js"],
       "env": {
-        "node": true
+        "node": true,
+        "commonjs": true
       },
       "rules": {
-        "no-unused-vars": "off"
+        "no-unused-vars": "off",
+        "no-undef": "off"
       }
     }
   ]

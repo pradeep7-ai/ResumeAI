@@ -48,7 +48,6 @@ function App() {
     setShowKeywordPreview,
     savedAnalyses,
     currentFileName,
-    setCurrentFileName,
     fileInputRef,
     analyzeResume,
     resetForm,
